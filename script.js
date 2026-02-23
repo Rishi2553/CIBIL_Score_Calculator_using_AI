@@ -12,7 +12,7 @@ const questions = [
 
 window.onload = function () {
     let chatBox = document.getElementById("chat-box");
-    chatBox.innerHTML += `<p class="bot-message"><strong>Bot:</strong> ${questions[step]}</p>`;
+    chatBox.innerHTML += `<p class="bot-message">${questions[step]}</p>`;
 };
 
 document.getElementById("user-input").addEventListener("keypress", function(event) {
@@ -27,7 +27,7 @@ async function sendMessage() {
 
     if (input === "") return;
 
-    chatBox.innerHTML += `<p class="user-message"><strong>You:</strong> ${input}</p>`;
+    chatBox.innerHTML += `<p class="user-message">${input}</p>`;
     document.getElementById("user-input").value = "";
 
     if (!validateInput(input, step)) {
@@ -106,8 +106,8 @@ function drawSpeedometer(score) {
     const ctx = canvas.getContext("2d");
 
     const cx = canvas.width / 2;
-    const cy = canvas.height - 20;
-    const radius = 100;
+    const cy = canvas.height - 10;
+    const radius = 65;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -126,7 +126,7 @@ function drawSpeedometer(score) {
     // Yellow (Medium)
     drawArc("#f1c40f", Math.PI * 1.33, Math.PI * 1.66);
 
-    // Red (High)
+    // Red (High)<canvas id="speedometer" width="400" height="250"></canvas>
     drawArc("#e74c3c", Math.PI * 1.66, Math.PI * 2);
 
     // ---- Needle ----

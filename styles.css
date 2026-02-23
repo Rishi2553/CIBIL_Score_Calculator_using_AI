@@ -51,29 +51,38 @@ body {
     padding: 15px;
     background: #f8f9fa;
     border: 1px solid #ccc;
+
+    display: flex;              /* 👈 ADD */
+    flex-direction: column;     /* 👈 ADD */
+    gap: 6px; 
     border-radius: 8px;
 }
 
-/* User messages on the right */
-.user-message {
-    align-self: flex-end;
-    background: red;
-    color: white;
-    padding: 10px;
-    border-radius: 10px;
+.user-message,
+.bot-message {
+    padding: 8px 12px;
+    border-radius: 12px;
     max-width: 70%;
-    margin: 5px;
+    margin: 6px 0;
+    width: fit-content;          /* 👈 KEY: only required space */
+    display: block;
+    word-wrap: break-word;
 }
 
-/* Bot messages on the left */
+/* Bot on LEFT */
 .bot-message {
     align-self: flex-start;
-    background: red;
+    background: #e53935;          /* red */
     color: white;
-    padding: 10px;
-    border-radius: 10px;
-    max-width: 70%;
-    margin: 5px;
+    border-bottom-left-radius: 4px;
+}
+
+/* You on RIGHT (WhatsApp style) */
+.user-message {
+    align-self: flex-end;
+    background: #1e88e5;          /* blue */
+    color: white;
+    border-bottom-right-radius: 4px;
 }
 
 /* Input box styling */
