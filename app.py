@@ -19,21 +19,35 @@ except Exception as e:
 def home():
     return jsonify({"message": "Credit Score Prediction API is running!"})
 
-@app.route('/predict', methods=['POST'])
+@app.route('/predict', methods=['GET'])
 def predict():
     try:
-        # ✅ Ensure request contains JSON
-        if not request.is_json:
-            return jsonify({"error": "Invalid request format. Expected JSON."}), 400
+        # ✅ Get query parameters
+        annual_revenue = request.args.get('annual_revenue', type=float)
+        loan_amount = request.args.get('loan_amount', type=float)
+        gst_compliance = request.args.get('gst_compliance', type=float)
+        past_defaults = request.args.get('past_defaults', type=int)
+        bank_transactions = request.args.get('bank_transactions', type=int)
+        market_trend = request.args.get('market_trend', type=int)
 
-        # ✅ Get JSON data from the request
-        data = request.get_json()
+        # ✅ Validate all parameters are present
+        params = {
+            'annual_revenue': annual_revenue,
+            'loan_amount': loan_amount,
+            'gst_compliance': gst_compliance,
+            'past_defaults': past_defaults,
+            'bank_transactions': bank_transactions,
+            'market_trend': market_trend
+        }
+        missing = [key for key, value in params.items() if value is None]
+        
+        if missing:
+            return jsonify({
+                "error": f"Missing required query parameters: {', '.join(missing)}"
+            }), 400
 
-        # ✅ Validate input structure
-        if "features" not in data:
-            return jsonify({"error": "Missing 'features' key in JSON data."}), 400
-
-        input_data = np.array([data["features"]])  # Extract features
+        # Create features array
+        input_data = np.array([[annual_revenue, loan_amount, gst_compliance, past_defaults, bank_transactions, market_trend]])
 
         # ✅ Convert to DataFrame with correct feature names
         input_df = pd.DataFrame(input_data, columns=feature_names)

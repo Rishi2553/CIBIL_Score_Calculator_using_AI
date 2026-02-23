@@ -79,10 +79,11 @@ async function fetchCreditScore() {
     };
 
     try {
-        let response = await fetch("http://127.0.0.1:5000/predict", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(testData)
+        // Build URL with query parameters
+        let url = `http://127.0.0.1:5000/predict?annual_revenue=${userData.annual_revenue}&loan_amount=${userData.loan_amount}&gst_compliance=${userData.gst_compliance}&past_defaults=${userData.past_defaults}&bank_transactions=${userData.bank_transactions}&market_trend=${userData.market_trend}`;
+        
+        let response = await fetch(url, {
+            method: "GET"
         });
 
         if (!response.ok) {
